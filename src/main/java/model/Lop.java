@@ -2,21 +2,16 @@ package model;
 
 import java.time.LocalDateTime;
 
-/**
- * Model class cho Lớp học - khớp với bảng DM_Lop trong schema
- */
 public class Lop {
     private int id;
     private String tenLop;
-    private int namHoc;  // Sửa từ String sang int để khớp với schema
-    private int khoiId;  // Thêm khoiId để liên kết với bảng DM_Khoi
-    private String tenKhoi; // Để hiển thị, sẽ được load từ JOIN
+    private int namHoc;  
+    private int khoiId;  
+    private String tenKhoi;
     private LocalDateTime createdAt;
     
-    // Constructor mặc định
     public Lop() {}
     
-    // Constructor với tham số
     public Lop(String tenLop, int namHoc, int khoiId) {
         this.tenLop = tenLop;
         this.namHoc = namHoc;
@@ -30,7 +25,6 @@ public class Lop {
         this.khoiId = khoiId;
     }
     
-    // Getter và Setter methods
     public int getId() {
         return id;
     }
@@ -79,9 +73,7 @@ public class Lop {
         this.createdAt = createdAt;
     }
     
-    /**
-     * Lấy khối lớp (10, 11, 12) từ tên lớp
-     */
+    // Lấy khối lớp (10, 11, 12) từ tên lớp
     public int getKhoi() {
         if (tenLop != null && tenLop.length() >= 2) {
             String khoi = tenLop.substring(0, 2);

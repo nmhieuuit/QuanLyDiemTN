@@ -2,19 +2,15 @@ package model;
 
 import java.time.LocalDateTime;
 
-/**
- * Model class cho Khối học - khớp với bảng DM_Khoi trong schema
- */
+
 public class Khoi {
     private int id;
     private String tenKhoi; // '10', '11', '12'
     private String moTa;
     private LocalDateTime createdAt;
     
-    // Constructor mặc định
     public Khoi() {}
     
-    // Constructor với tham số
     public Khoi(String tenKhoi, String moTa) {
         this.tenKhoi = tenKhoi;
         this.moTa = moTa;
@@ -26,7 +22,6 @@ public class Khoi {
         this.moTa = moTa;
     }
     
-    // Getter và Setter methods
     public int getId() {
         return id;
     }
@@ -59,9 +54,6 @@ public class Khoi {
         this.createdAt = createdAt;
     }
     
-    /**
-     * Lấy số khối dưới dạng integer
-     */
     public int getKhoiNumber() {
         try {
             return Integer.parseInt(tenKhoi);

@@ -15,7 +15,6 @@ public class HocSinhDAO {
     
     public List<HocSinh> getAllHocSinh() {
         List<HocSinh> list = new ArrayList<>();
-        // Truy vấn lấy học sinh không trùng lặp với thông tin lớp gần nhất (năm học cao nhất)
         String sql = "WITH LatestClass AS (" +
                     "    SELECT hs.ID, hs.HoTen, hs.NgaySinh, hs.GioiTinh, hs.DiaChi, hs.created_at, " +
                     "           l.TenLop + ' - ' + CAST(l.NamHoc AS NVARCHAR) AS TenLop, " +
@@ -41,7 +40,7 @@ public class HocSinhDAO {
                 hs.setGioiTinh(rs.getBoolean("GioiTinh"));
                 hs.setDiaChi(rs.getString("DiaChi"));
                 hs.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-                hs.setTenLop(rs.getString("TenLop")); // Tên lớp gần nhất hoặc null
+                hs.setTenLop(rs.getString("TenLop")); 
                 list.add(hs);
             }
         } catch (SQLException e) {
@@ -103,7 +102,6 @@ public class HocSinhDAO {
     
     public List<HocSinh> searchHocSinh(String keyword) {
         List<HocSinh> list = new ArrayList<>();
-        // Truy vấn tìm kiếm học sinh không trùng lặp với thông tin lớp gần nhất
         String sql = "WITH LatestClass AS (" +
                     "    SELECT hs.ID, hs.HoTen, hs.NgaySinh, hs.GioiTinh, hs.DiaChi, hs.created_at, " +
                     "           l.TenLop + ' - ' + CAST(l.NamHoc AS NVARCHAR) AS TenLop, " +
@@ -121,6 +119,10 @@ public class HocSinhDAO {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
+            // stmt.setString(1, "%" + keyword + "%");
+            // stmt.setInt(2, keyword.matches("\\d+") ? Integer.parseInt(keyword) : 0);
+            // stmt.setString(3, "%" + keyword.matches("\\d+") + "%"); 
+
             stmt.setString(1, "%" + keyword + "%");
             stmt.setInt(2, keyword.matches("\\d+") ? Integer.parseInt(keyword) : -1);
             stmt.setString(3, "%" + keyword + "%"); 
@@ -134,7 +136,7 @@ public class HocSinhDAO {
                 hs.setGioiTinh(rs.getBoolean("GioiTinh"));
                 hs.setDiaChi(rs.getString("DiaChi"));
                 hs.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-                hs.setTenLop(rs.getString("TenLop")); // Tên lớp gần nhất hoặc null
+                hs.setTenLop(rs.getString("TenLop")); 
                 list.add(hs);
             }
         } catch (SQLException e) {
@@ -200,7 +202,6 @@ public class HocSinhDAO {
                 hs.setDiaChi(rs.getString("DiaChi"));
                 hs.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                 
-                // Set tên lớp (có thể null nếu học sinh chưa có lớp)
                 String tenLop = rs.getString("TenLop");
                 hs.setTenLop(tenLop);
                 
@@ -210,5 +211,28 @@ public class HocSinhDAO {
             e.printStackTrace();
         }
         return list;
+    }
+    
+    public String getLopHienTai(int hsId) {
+        String sql = "SELECT l.TenLop + ' - ' + k.TenKhoi + ' - Năm ' + CAST(l.NamHoc AS NVARCHAR) AS LopHienTai " +
+                    "FROM Lop_HocSinh lhs " +
+                    "INNER JOIN DM_Lop l ON lhs.LOP_ID = l.ID " +
+                    "INNER JOIN DM_Khoi k ON l.KhoiID = k.ID " +
+                    "WHERE lhs.HS_ID = ? AND lhs.TrangThai = 1";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, hsId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String result = rs.getString("LopHienTai");
+                    return result;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Chưa có lớp";
     }
 }

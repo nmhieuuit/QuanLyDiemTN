@@ -11,17 +11,12 @@ import java.util.List;
 import config.DatabaseConnection;
 import model.DiemTotNghiep;
 
-/**
- * Data Access Object cho Điểm tốt nghiệp
- */
+
 public class DiemTotNghiepDAO {
     
     public DiemTotNghiepDAO() {
     }
-    
-    /**
-     * Thêm điểm tốt nghiệp mới
-     */
+
     public boolean themDiemTotNghiep(DiemTotNghiep diemTN) {
         String sql = "INSERT INTO DiemTotNghiep (HS_ID, TenMon, Diem, KetQua) VALUES (?, ?, ?, ?)";
         
@@ -41,9 +36,7 @@ public class DiemTotNghiepDAO {
         return false;
     }
     
-    /**
-     * Cập nhật điểm tốt nghiệp
-     */
+
     public boolean suaDiemTotNghiep(DiemTotNghiep diemTN) {
         String sql = "UPDATE DiemTotNghiep SET Diem = ?, KetQua = ? WHERE HS_ID = ? AND TenMon = ?";
         
@@ -62,10 +55,7 @@ public class DiemTotNghiepDAO {
         }
         return false;
     }
-    
-    /**
-     * Xóa điểm tốt nghiệp
-     */
+
     public boolean xoaDiemTotNghiep(int hsId, String tenMon) {
         String sql = "DELETE FROM DiemTotNghiep WHERE HS_ID = ? AND TenMon = ?";
         
@@ -82,10 +72,7 @@ public class DiemTotNghiepDAO {
         }
         return false;
     }
-    
-    /**
-     * Lấy điểm tốt nghiệp theo sinh viên và môn học
-     */
+
     public DiemTotNghiep getDiemTotNghiep(int hsId, String tenMon) {
         String sql = "SELECT * FROM DiemTotNghiep WHERE HS_ID = ? AND TenMon = ?";
         
@@ -106,9 +93,6 @@ public class DiemTotNghiepDAO {
         return null;
     }
     
-    /**
-     * Lấy tất cả điểm tốt nghiệp của một sinh viên
-     */
     public List<DiemTotNghiep> getDiemTotNghiepBySinhVien(int hsId) {
         List<DiemTotNghiep> danhSach = new ArrayList<>();
         String sql = "SELECT * FROM DiemTotNghiep WHERE HS_ID = ? ORDER BY TenMon";
@@ -129,9 +113,7 @@ public class DiemTotNghiepDAO {
         return danhSach;
     }
     
-    /**
-     * Lấy danh sách sinh viên đậu/rớt theo môn
-     */
+
     public List<DiemTotNghiep> getDiemTotNghiepByMon(String tenMon) {
         List<DiemTotNghiep> danhSach = new ArrayList<>();
         String sql = "SELECT dt.*, sv.TenSinhVien FROM DiemTotNghiep dt " +
@@ -154,9 +136,6 @@ public class DiemTotNghiepDAO {
         return danhSach;
     }
     
-    /**
-     * Thống kê số lượng đậu/rớt theo môn
-     */
     public ResultSet thongKeDauRotTheoMon(String tenMon) {
         String sql = "SELECT KetQua, COUNT(*) as SoLuong FROM DiemTotNghiep " +
                      "WHERE TenMon = ? GROUP BY KetQua";
@@ -173,9 +152,7 @@ public class DiemTotNghiepDAO {
         return null;
     }
     
-    /**
-     * Lấy danh sách sinh viên đạt tốt nghiệp
-     */
+
     public List<Integer> getSinhVienDatTotNghiep() {
         List<Integer> danhSach = new ArrayList<>();
         String sql = "SELECT HS_ID FROM DiemTotNghiep " +
@@ -195,10 +172,7 @@ public class DiemTotNghiepDAO {
         }
         return danhSach;
     }
-    
-    /**
-     * Chuyển đổi ResultSet thành DiemTotNghiep
-     */
+
     private DiemTotNghiep mapResultSetToDiemTotNghiep(ResultSet rs) throws SQLException {
         DiemTotNghiep diemTN = new DiemTotNghiep();
         diemTN.setHsId(rs.getInt("HS_ID"));

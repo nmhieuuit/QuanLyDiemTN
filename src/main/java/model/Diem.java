@@ -2,9 +2,6 @@ package model;
 
 import java.util.Date;
 
-/**
- * Model class cho Điểm học kỳ
- */
 public class Diem {
     private int hsId;
     private String maLop;
@@ -12,15 +9,13 @@ public class Diem {
     private Date ngayThi;
     private double diemToan;
     private double diemVan;
-    private String hocKy; // HK1, HK2
+    private String hocKy; 
     private String namHoc;
     private int userCreated;
     private Date createdAt;
     
-    // Constructor mặc định
     public Diem() {}
     
-    // Constructor với tham số
     public Diem(int hsId, String maLop, String tenMon, String hocKy, String namHoc) {
         this.hsId = hsId;
         this.maLop = maLop;
@@ -42,7 +37,6 @@ public class Diem {
         this.createdAt = new Date();
     }
     
-    // Getter và Setter methods
     public int getHsId() {
         return hsId;
     }
@@ -123,16 +117,10 @@ public class Diem {
         this.createdAt = createdAt;
     }
     
-    /**
-     * Tính điểm trung bình của môn học
-     */
     public double getDiemTrungBinh() {
         return (diemToan + diemVan) / 2.0;
     }
     
-    /**
-     * Kiểm tra điểm có đạt yêu cầu không (>= 5.0)
-     */
     public boolean isDat() {
         return getDiemTrungBinh() >= 5.0;
     }

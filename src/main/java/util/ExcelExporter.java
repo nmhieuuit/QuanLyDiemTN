@@ -34,7 +34,6 @@ public class ExcelExporter {
             try (Workbook workbook = new XSSFWorkbook()) {
                 Sheet sheet = workbook.createSheet(sheetName);
                 
-                // Create header row
                 Row headerRow = sheet.createRow(0);
                 CellStyle headerStyle = workbook.createCellStyle();
                 Font headerFont = workbook.createFont();
@@ -47,7 +46,6 @@ public class ExcelExporter {
                     cell.setCellStyle(headerStyle);
                 }
                 
-                // Create data rows
                 for (int i = 0; i < tableModel.getRowCount(); i++) {
                     Row row = sheet.createRow(i + 1);
                     for (int j = 0; j < tableModel.getColumnCount(); j++) {
@@ -61,12 +59,10 @@ public class ExcelExporter {
                     }
                 }
                 
-                // Auto-size columns
                 for (int i = 0; i < tableModel.getColumnCount(); i++) {
                     sheet.autoSizeColumn(i);
                 }
                 
-                // Write to file
                 try (FileOutputStream outputStream = new FileOutputStream(fileChooser.getSelectedFile())) {
                     workbook.write(outputStream);
                 }

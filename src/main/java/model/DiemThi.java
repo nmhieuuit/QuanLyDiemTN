@@ -21,7 +21,6 @@ public class DiemThi {
         this.hsId = hsId;
     }
     
-    // Getters and Setters
     public int getHsId() { return hsId; }
     public void setHsId(int hsId) { this.hsId = hsId; }
     
@@ -55,7 +54,6 @@ public class DiemThi {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
     
-    // Tính tổng điểm thi
     public double tinhTongDiemThi() {
         return (diemToan + diemVan + tuChon1Diem + tuChon2Diem) / 4.0;
     }

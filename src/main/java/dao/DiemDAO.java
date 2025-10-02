@@ -14,7 +14,6 @@ import model.MonHoc;
 
 public class DiemDAO {
     
-    // Điểm học kỳ
     public DiemHocKy getDiemHocKy(int hsId) {
         String sql = "SELECT * FROM HocSinh_DiemHocKy WHERE HS_ID = ?";
         
@@ -49,7 +48,6 @@ public class DiemDAO {
         
         try (Connection conn = DatabaseConnection.getConnection()) {
             
-            // Kiểm tra xem đã có dữ liệu chưa
             try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                 checkStmt.setInt(1, diem.getHsId());
                 ResultSet rs = checkStmt.executeQuery();
@@ -83,8 +81,6 @@ public class DiemDAO {
             return false;
         }
     }
-    
-    // Điểm thi tốt nghiệp
     public DiemThi getDiemThi(int hsId) {
         String sql = "SELECT * FROM HocSinh_DiemThi WHERE HS_ID = ?";
         
@@ -156,7 +152,6 @@ public class DiemDAO {
         }
     }
     
-    // Môn học
     public List<MonHoc> getAllMonHoc() {
         List<MonHoc> list = new ArrayList<>();
         String sql = "SELECT * FROM MonHoc ORDER BY LoaiMon, TenMon";

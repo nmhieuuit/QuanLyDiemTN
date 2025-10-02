@@ -7,10 +7,10 @@ public class HocSinh {
     private int id;
     private String hoTen;
     private LocalDate ngaySinh;
-    private boolean gioiTinh; // true: Nam, false: Nữ
+    private boolean gioiTinh; 
     private String diaChi;
     private LocalDateTime createdAt;
-    private String tenLop; // Tên lớp của học sinh
+    private String tenLop; 
     
     public HocSinh() {}
     
@@ -21,7 +21,6 @@ public class HocSinh {
         this.diaChi = diaChi;
     }
     
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

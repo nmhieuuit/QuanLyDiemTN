@@ -35,6 +35,8 @@ public class DiemHocKyPanel extends JPanel {
     private JComboBox<HocSinh> cboHocSinh;
     private JTextField txtHK1_10, txtHK2_10, txtHK1_11, txtHK2_11, txtHK1_12, txtHK2_12;
     private JTextField txtDiemTB;
+    private JTextField txtTBLop10, txtTBLop11, txtTBLop12; 
+    private JTextField txtLopHienTai;
     private JTable tableDiem;
     private DefaultTableModel tableModel;
     private JButton btnLuu, btnXoa, btnTimKiem, btnCapNhat, btnReset, btnExportExcel;
@@ -54,7 +56,6 @@ public class DiemHocKyPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Tạo searchable combo box cho học sinh
         cboHocSinh = new JComboBox<>();
         cboHocSinh.setPreferredSize(new Dimension(250, 25));
         
@@ -68,6 +69,22 @@ public class DiemHocKyPanel extends JPanel {
         txtDiemTB.setEditable(false);
         txtDiemTB.setBackground(Color.LIGHT_GRAY);
         
+        txtTBLop10 = new JTextField(8);
+        txtTBLop10.setEditable(false);
+        txtTBLop10.setBackground(Color.LIGHT_GRAY);
+        
+        txtTBLop11 = new JTextField(8);
+        txtTBLop11.setEditable(false);
+        txtTBLop11.setBackground(Color.LIGHT_GRAY);
+        
+        txtTBLop12 = new JTextField(8);
+        txtTBLop12.setEditable(false);
+        txtTBLop12.setBackground(Color.LIGHT_GRAY);
+        
+        txtLopHienTai = new JTextField(15);
+        txtLopHienTai.setEditable(false);
+        txtLopHienTai.setBackground(Color.LIGHT_GRAY);
+        
         txtTimKiem = new JTextField(15);
         
         btnLuu = new JButton("Lưu điểm");
@@ -77,7 +94,7 @@ public class DiemHocKyPanel extends JPanel {
         btnCapNhat = new JButton("Cập nhật");
         btnExportExcel = new JButton("Xuất Excel");
         
-        String[] columns = {"Mã HS", "Họ tên", "HK1-10", "HK2-10", "HK1-11", "HK2-11", "HK1-12", "HK2-12", "TB các năm"};
+        String[] columns = {"Mã HS", "Họ tên", "HK1-10", "HK2-10", "TB lớp 10", "HK1-11", "HK2-11", "TB lớp 11", "HK1-12", "HK2-12", "TB lớp 12", "TB các năm"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
@@ -89,22 +106,22 @@ public class DiemHocKyPanel extends JPanel {
     private void setupLayout() {
         setLayout(new BorderLayout());
         
-        // Top panel - Form nhập điểm
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBorder(BorderFactory.createTitledBorder("Nhập điểm học kỳ"));
         
-        // Form panel
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         
-        // Row 1 - Chọn học sinh
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
         formPanel.add(new JLabel("Học sinh:"), gbc);
-        gbc.gridx = 1; gbc.gridwidth = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 1; gbc.gridwidth = 2; gbc.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(cboHocSinh, gbc);
+        gbc.gridx = 3; gbc.gridwidth = 1; gbc.fill = GridBagConstraints.NONE;
+        formPanel.add(new JLabel("Lớp hiện tại:"), gbc);
+        gbc.gridx = 4; gbc.gridwidth = 2; gbc.fill = GridBagConstraints.HORIZONTAL;
+        formPanel.add(txtLopHienTai, gbc);
         
-        // Row 2 - Điểm lớp 10
         gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 1; gbc.fill = GridBagConstraints.NONE;
         formPanel.add(new JLabel("Lớp 10:"), gbc);
         gbc.gridx = 1;
@@ -112,11 +129,16 @@ public class DiemHocKyPanel extends JPanel {
         gbc.gridx = 2;
         formPanel.add(txtHK1_10, gbc);
         gbc.gridx = 3;
+        gbc.insets = new Insets(5, 2, 5, 2);
         formPanel.add(new JLabel("HK2:"), gbc);
         gbc.gridx = 4;
+        gbc.insets = new Insets(5, 5, 5, 5);
         formPanel.add(txtHK2_10, gbc);
+        gbc.gridx = 5;
+        formPanel.add(new JLabel("TB lớp 10:"), gbc);
+        gbc.gridx = 6;
+        formPanel.add(txtTBLop10, gbc);
         
-        // Row 3 - Điểm lớp 11
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Lớp 11:"), gbc);
         gbc.gridx = 1;
@@ -124,11 +146,16 @@ public class DiemHocKyPanel extends JPanel {
         gbc.gridx = 2;
         formPanel.add(txtHK1_11, gbc);
         gbc.gridx = 3;
+        gbc.insets = new Insets(5, 2, 5, 2);
         formPanel.add(new JLabel("HK2:"), gbc);
         gbc.gridx = 4;
+        gbc.insets = new Insets(5, 5, 5, 5); 
         formPanel.add(txtHK2_11, gbc);
+        gbc.gridx = 5;
+        formPanel.add(new JLabel("TB lớp 11:"), gbc);
+        gbc.gridx = 6;
+        formPanel.add(txtTBLop11, gbc);
         
-        // Row 4 - Điểm lớp 12
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Lớp 12:"), gbc);
         gbc.gridx = 1;
@@ -136,11 +163,16 @@ public class DiemHocKyPanel extends JPanel {
         gbc.gridx = 2;
         formPanel.add(txtHK1_12, gbc);
         gbc.gridx = 3;
+        gbc.insets = new Insets(5, 2, 5, 2); 
         formPanel.add(new JLabel("HK2:"), gbc);
         gbc.gridx = 4;
+        gbc.insets = new Insets(5, 5, 5, 5); 
         formPanel.add(txtHK2_12, gbc);
+        gbc.gridx = 5;
+        formPanel.add(new JLabel("TB lớp 12:"), gbc);
+        gbc.gridx = 6;
+        formPanel.add(txtTBLop12, gbc);
         
-        // Row 5 - Điểm TB
         gbc.gridx = 0; gbc.gridy = 4;
         formPanel.add(new JLabel("TB các năm:"), gbc);
         gbc.gridx = 1; gbc.gridwidth = 2;
@@ -148,7 +180,6 @@ public class DiemHocKyPanel extends JPanel {
         
         topPanel.add(formPanel, BorderLayout.CENTER);
         
-        // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(btnLuu);
         buttonPanel.add(btnXoa);
@@ -160,11 +191,9 @@ public class DiemHocKyPanel extends JPanel {
         
         add(topPanel, BorderLayout.NORTH);
         
-        // Center panel - Table và tìm kiếm
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBorder(BorderFactory.createTitledBorder("Danh sách điểm học kỳ"));
         
-        // Search panel
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchPanel.add(new JLabel("Tìm kiếm học sinh:"));
         searchPanel.add(txtTimKiem);
@@ -188,7 +217,6 @@ public class DiemHocKyPanel extends JPanel {
         
         txtTimKiem.addActionListener(e -> timKiemHocSinh());
         
-        // Add text change listeners to calculate TB
         JTextField[] diemFields = {txtHK1_10, txtHK2_10, txtHK1_11, txtHK2_11, txtHK1_12, txtHK2_12};
         for (JTextField field : diemFields) {
             field.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -206,16 +234,14 @@ public class DiemHocKyPanel extends JPanel {
     }
     
     private void loadData() {
-        // Load học sinh
         List<HocSinh> listHocSinh = hocSinhDAO.getAllHocSinh();
         System.out.println("Loaded students: " + listHocSinh);
         cboHocSinh.removeAllItems();
-        cboHocSinh.addItem(null); // Add null item for default placeholder
+        cboHocSinh.addItem(null);
         for (HocSinh hs : listHocSinh) {
             cboHocSinh.addItem(hs);
         }
         
-        // Set custom renderer for dropdown
         cboHocSinh.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
@@ -230,9 +256,8 @@ public class DiemHocKyPanel extends JPanel {
             }
         });
         
-        cboHocSinh.setSelectedIndex(0); // Select the placeholder by default
+        cboHocSinh.setSelectedIndex(0); 
         
-        // Load table
         loadTableData();
     }
     
@@ -242,15 +267,35 @@ public class DiemHocKyPanel extends JPanel {
         
         for (HocSinh hs : listHocSinh) {
             DiemHocKy diem = diemDAO.getDiemHocKy(hs.getId());
+            
+            Double tbLop10 = null;
+            Double tbLop11 = null;
+            Double tbLop12 = null;
+            
+            if (diem != null) {
+                if (diem.getHk1_10() != null && diem.getHk2_10() != null) {
+                    tbLop10 = (diem.getHk1_10() + diem.getHk2_10() * 2) / 3.0;
+                }
+                if (diem.getHk1_11() != null && diem.getHk2_11() != null) {
+                    tbLop11 = (diem.getHk1_11() + diem.getHk2_11() * 2) / 3.0;
+                }
+                if (diem.getHk1_12() != null && diem.getHk2_12() != null) {
+                    tbLop12 = (diem.getHk1_12() + diem.getHk2_12() * 2) / 3.0;
+                }
+            }
+            
             Object[] row = {
                 hs.getId(),
                 hs.getHoTen(),
                 diem != null && diem.getHk1_10() != null ? df.format(diem.getHk1_10()) : "",
                 diem != null && diem.getHk2_10() != null ? df.format(diem.getHk2_10()) : "",
+                tbLop10 != null ? df.format(tbLop10) : "",
                 diem != null && diem.getHk1_11() != null ? df.format(diem.getHk1_11()) : "",
                 diem != null && diem.getHk2_11() != null ? df.format(diem.getHk2_11()) : "",
+                tbLop11 != null ? df.format(tbLop11) : "",
                 diem != null && diem.getHk1_12() != null ? df.format(diem.getHk1_12()) : "",
                 diem != null && diem.getHk2_12() != null ? df.format(diem.getHk2_12()) : "",
+                tbLop12 != null ? df.format(tbLop12) : "",
                 diem != null && diem.getDiemTBCacNam() != null ? df.format(diem.getDiemTBCacNam()) : ""
             };
             tableModel.addRow(row);
@@ -260,6 +305,9 @@ public class DiemHocKyPanel extends JPanel {
     private void loadDiemHocSinh() {
         HocSinh selectedHS = (HocSinh) cboHocSinh.getSelectedItem();
         if (selectedHS != null) {
+            String lopHienTai = hocSinhDAO.getLopHienTai(selectedHS.getId());
+            txtLopHienTai.setText(lopHienTai);
+            
             DiemHocKy diem = diemDAO.getDiemHocKy(selectedHS.getId());
             
             if (diem != null) {
@@ -273,6 +321,8 @@ public class DiemHocKyPanel extends JPanel {
                 clearForm();
             }
             tinhDiemTB();
+        } else {
+            txtLopHienTai.setText("");
         }
     }
     
@@ -332,7 +382,6 @@ public class DiemHocKyPanel extends JPanel {
             JOptionPane.YES_NO_OPTION);
         
         if (result == JOptionPane.YES_OPTION) {
-            // Implementation for delete - would need to add delete method to DiemDAO
             clearForm();
             loadTableData();
         }
@@ -350,15 +399,35 @@ public class DiemHocKyPanel extends JPanel {
         
         for (HocSinh hs : searchResults) {
             DiemHocKy diem = diemDAO.getDiemHocKy(hs.getId());
+            
+            Double tbLop10 = null;
+            Double tbLop11 = null;
+            Double tbLop12 = null;
+            
+            if (diem != null) {
+                if (diem.getHk1_10() != null && diem.getHk2_10() != null) {
+                    tbLop10 = (diem.getHk1_10() + diem.getHk2_10() * 2) / 3.0;
+                }
+                if (diem.getHk1_11() != null && diem.getHk2_11() != null) {
+                    tbLop11 = (diem.getHk1_11() + diem.getHk2_11() * 2) / 3.0;
+                }
+                if (diem.getHk1_12() != null && diem.getHk2_12() != null) {
+                    tbLop12 = (diem.getHk1_12() + diem.getHk2_12() * 2) / 3.0;
+                }
+            }
+            
             Object[] row = {
                 hs.getId(),
                 hs.getHoTen(),
                 diem != null && diem.getHk1_10() != null ? df.format(diem.getHk1_10()) : "",
                 diem != null && diem.getHk2_10() != null ? df.format(diem.getHk2_10()) : "",
+                tbLop10 != null ? df.format(tbLop10) : "",
                 diem != null && diem.getHk1_11() != null ? df.format(diem.getHk1_11()) : "",
                 diem != null && diem.getHk2_11() != null ? df.format(diem.getHk2_11()) : "",
+                tbLop11 != null ? df.format(tbLop11) : "",
                 diem != null && diem.getHk1_12() != null ? df.format(diem.getHk1_12()) : "",
                 diem != null && diem.getHk2_12() != null ? df.format(diem.getHk2_12()) : "",
+                tbLop12 != null ? df.format(tbLop12) : "",
                 diem != null && diem.getDiemTBCacNam() != null ? df.format(diem.getDiemTBCacNam()) : ""
             };
             tableModel.addRow(row);
@@ -368,15 +437,12 @@ public class DiemHocKyPanel extends JPanel {
     private void selectHocSinhFromTable() {
         int selectedRow = tableDiem.getSelectedRow();
         if (selectedRow >= 0) {
-            // Lấy ID học sinh từ cột 0 (Mã HS)
             int hsId = (Integer) tableModel.getValueAt(selectedRow, 0);
             
-            // Tìm và chọn học sinh trong dropdown theo ID
             for (int i = 0; i < cboHocSinh.getItemCount(); i++) {
                 HocSinh hs = cboHocSinh.getItemAt(i);
                 if (hs != null && hs.getId() == hsId) {
                     cboHocSinh.setSelectedIndex(i);
-                    // Load dữ liệu điểm cho học sinh được chọn
                     loadDiemHocSinh();
                     break;
                 }
@@ -398,15 +464,26 @@ public class DiemHocKyPanel extends JPanel {
             
             if (hk1_10 != null && hk2_10 != null) {
                 tb10 = (hk1_10 + hk2_10 * 2) / 3.0;
+                txtTBLop10.setText(df.format(tb10));
                 count++;
+            } else {
+                txtTBLop10.setText("");
             }
+            
             if (hk1_11 != null && hk2_11 != null) {
                 tb11 = (hk1_11 + hk2_11 * 2) / 3.0;
+                txtTBLop11.setText(df.format(tb11));
                 count++;
+            } else {
+                txtTBLop11.setText("");
             }
+            
             if (hk1_12 != null && hk2_12 != null) {
                 tb12 = (hk1_12 + hk2_12 * 2) / 3.0;
+                txtTBLop12.setText(df.format(tb12));
                 count++;
+            } else {
+                txtTBLop12.setText("");
             }
             
             if (count > 0) {
@@ -417,6 +494,9 @@ public class DiemHocKyPanel extends JPanel {
             }
         } catch (NumberFormatException e) {
             txtDiemTB.setText("");
+            txtTBLop10.setText("");
+            txtTBLop11.setText("");
+            txtTBLop12.setText("");
         }
     }
     
@@ -428,6 +508,10 @@ public class DiemHocKyPanel extends JPanel {
         txtHK1_12.setText("");
         txtHK2_12.setText("");
         txtDiemTB.setText("");
+        txtTBLop10.setText("");
+        txtTBLop11.setText("");
+        txtTBLop12.setText("");
+        txtLopHienTai.setText("");
     }
     
     private boolean validateDiemInput() {

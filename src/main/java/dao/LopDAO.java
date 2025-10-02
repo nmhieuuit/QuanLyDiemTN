@@ -38,9 +38,6 @@ public class LopDAO {
         return list;
     }
     
-    /**
-     * Lấy danh sách lớp theo khối
-     */
     public List<Lop> getLopByKhoi(int khoiId) {
         List<Lop> list = new ArrayList<>();
         String sql = "SELECT l.*, k.TenKhoi FROM DM_Lop l " +
@@ -105,13 +102,31 @@ public class LopDAO {
     }
     
     public boolean deleteLop(int id) {
-        String sql = "DELETE FROM DM_Lop WHERE ID=?";
+        String checkSql = "SELECT COUNT(*) FROM Lop_HocSinh WHERE LOP_ID = ? AND TrangThai = 1";
         
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
             
-            stmt.setInt(1, id);
-            return stmt.executeUpdate() > 0;
+            checkStmt.setInt(1, id);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    System.out.println("Không thể xóa lớp vì vẫn còn học sinh đang học");
+                    return false;
+                }
+            }
+            
+            String deleteHistorySql = "DELETE FROM Lop_HocSinh WHERE LOP_ID = ?";
+            try (PreparedStatement deleteHistoryStmt = conn.prepareStatement(deleteHistorySql)) {
+                deleteHistoryStmt.setInt(1, id);
+                deleteHistoryStmt.executeUpdate();
+            }
+            
+            String deleteLopSql = "DELETE FROM DM_Lop WHERE ID = ?";
+            try (PreparedStatement deleteLopStmt = conn.prepareStatement(deleteLopSql)) {
+                deleteLopStmt.setInt(1, id);
+                return deleteLopStmt.executeUpdate() > 0;
+            }
+            
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -149,9 +164,10 @@ public class LopDAO {
     }
     
     public boolean addHocSinhToLop(int hsId, int lopId) {
-        // Kiểm tra business rule: Một năm học, học sinh chỉ được học 1 lớp
         String checkSql = "SELECT COUNT(*) FROM Lop_HocSinh lhs " +
                          "JOIN DM_Lop l ON lhs.LOP_ID = l.ID " +
+                        //  "WHERE lhs.HS_ID = ? " +
+                        //  "AND lhs.TrangThai = 0";
                          "WHERE lhs.HS_ID = ? AND l.NamHoc = (SELECT NamHoc FROM DM_Lop WHERE ID = ?) " +
                          "AND lhs.TrangThai = 1";
         
@@ -163,12 +179,10 @@ public class LopDAO {
             
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) > 0) {
-                    // Học sinh đã có lớp trong năm học này
                     return false;
                 }
             }
             
-            // Thêm học sinh vào lớp
             String insertSql = "INSERT INTO Lop_HocSinh (HS_ID, LOP_ID) VALUES (?, ?)";
             try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                 insertStmt.setInt(1, hsId);
@@ -199,9 +213,6 @@ public class LopDAO {
         }
     }
     
-    /**
-     * Lấy danh sách học sinh chưa có lớp trong một năm học cụ thể
-     */
     public List<HocSinh> getHocSinhChuaCoLop(int namHoc) {
         List<HocSinh> list = new ArrayList<>();
         String sql = "SELECT hs.* FROM DM_HocSinh hs " +

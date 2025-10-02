@@ -128,7 +128,6 @@ public class ThongKePanel extends JPanel {
         
         add(topPanel, BorderLayout.NORTH);
         
-        // Center panel - Table
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.add(new JScrollPane(tableThongKe), BorderLayout.CENTER);
         centerPanel.add(new JScrollPane(txtSummary), BorderLayout.SOUTH);
@@ -144,12 +143,10 @@ public class ThongKePanel extends JPanel {
     }
     
     private void loadData() {
-        // Load only grade 12 classes
         cboLop.removeAllItems();
-        cboLop.addItem(null); // All grade 12 classes option
+        cboLop.addItem(null); 
         
         try {
-            // Get grade 12 khoi
             List<Khoi> khoiList = khoiDAO.getAllKhoi();
             Khoi khoi12 = null;
             for (Khoi khoi : khoiList) {
@@ -160,7 +157,6 @@ public class ThongKePanel extends JPanel {
             }
             
             if (khoi12 != null) {
-                // Load only grade 12 classes
                 List<Lop> lopKhoi12 = lopDAO.getLopByKhoi(khoi12.getId());
                 for (Lop lop : lopKhoi12) {
                     cboLop.addItem(lop);
@@ -172,7 +168,6 @@ public class ThongKePanel extends JPanel {
                 "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         
-        // Set custom renderer for lop dropdown
         cboLop.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
@@ -187,14 +182,12 @@ public class ThongKePanel extends JPanel {
             }
         });
         
-        // Load năm học
         cboNamHoc.removeAllItems();
-        cboNamHoc.addItem(null); // All years option
+        cboNamHoc.addItem(null); 
         for (int year = 2020; year <= 2030; year++) {
             cboNamHoc.addItem(year);
         }
         
-        // Set custom renderer for nam hoc dropdown
         cboNamHoc.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
@@ -253,7 +246,6 @@ public class ThongKePanel extends JPanel {
     private void thongKeTheoLop() {
         Lop selectedLop = (Lop) cboLop.getSelectedItem();
         if (selectedLop == null) {
-            // Thống kê tất cả lớp
             Map<String, Object[]> stats = thongKeDAO.thongKeTheoTatCaLop();
             int stt = 1;
             for (Map.Entry<String, Object[]> entry : stats.entrySet()) {
@@ -262,7 +254,6 @@ public class ThongKePanel extends JPanel {
                 tableModel.addRow(row);
             }
         } else {
-            // Thống kê lớp cụ thể
             Object[] stats = thongKeDAO.thongKeTheoLop(selectedLop.getId());
             Object[] row = {1, selectedLop.getTenLop(), stats[0], stats[1], stats[2], stats[3], stats[4]};
             tableModel.addRow(row);
@@ -274,7 +265,6 @@ public class ThongKePanel extends JPanel {
     private void thongKeTheoNamHoc() {
         Integer selectedYear = (Integer) cboNamHoc.getSelectedItem();
         if (selectedYear == null) {
-            // Thống kê tất cả năm học
             Map<Integer, Object[]> stats = thongKeDAO.thongKeTheoTatCaNamHoc();
             int stt = 1;
             for (Map.Entry<Integer, Object[]> entry : stats.entrySet()) {
@@ -284,7 +274,6 @@ public class ThongKePanel extends JPanel {
                 tableModel.addRow(row);
             }
         } else {
-            // Thống kê năm học cụ thể
             Object[] stats = thongKeDAO.thongKeTheoNamHoc(selectedYear);
             Object[] row = {1, selectedYear + "-" + (selectedYear + 1), 
                            stats[0], stats[1], stats[2], stats[3], stats[4]};
@@ -335,13 +324,11 @@ public class ThongKePanel extends JPanel {
             try (Workbook workbook = new XSSFWorkbook()) {
                 Sheet sheet = workbook.createSheet("Thống kê");
                 
-                // Create header row
                 Row headerRow = sheet.createRow(0);
                 for (int i = 0; i < tableModel.getColumnCount(); i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(tableModel.getColumnName(i));
                     
-                    // Style header
                     CellStyle headerStyle = workbook.createCellStyle();
                     org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
                     headerFont.setBold(true);
@@ -349,7 +336,6 @@ public class ThongKePanel extends JPanel {
                     cell.setCellStyle(headerStyle);
                 }
                 
-                // Create data rows
                 for (int i = 0; i < tableModel.getRowCount(); i++) {
                     Row row = sheet.createRow(i + 1);
                     for (int j = 0; j < tableModel.getColumnCount(); j++) {
@@ -363,12 +349,10 @@ public class ThongKePanel extends JPanel {
                     }
                 }
                 
-                // Auto-size columns
                 for (int i = 0; i < tableModel.getColumnCount(); i++) {
                     sheet.autoSizeColumn(i);
                 }
                 
-                // Write to file
                 try (FileOutputStream outputStream = new FileOutputStream(fileChooser.getSelectedFile())) {
                     workbook.write(outputStream);
                 }
@@ -391,21 +375,17 @@ public class ThongKePanel extends JPanel {
         
         String type = (String) cboThongKeType.getSelectedItem();
         
-        // Create a frame to display charts
         javax.swing.JFrame chartFrame = new javax.swing.JFrame("Biểu đồ thống kê");
         chartFrame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         chartFrame.setSize(800, 600);
         chartFrame.setLocationRelativeTo(this);
         
-        // Create tabbed pane for different chart types
         javax.swing.JTabbedPane tabbedPane = new javax.swing.JTabbedPane();
         
-        // Bar chart for pass/fail statistics
         JFreeChart barChart = createBarChart(type);
         ChartPanel barChartPanel = new ChartPanel(barChart);
         tabbedPane.addTab("Biểu đồ cột", barChartPanel);
         
-        // Pie chart for overall pass rate
         JFreeChart pieChart = createPieChart(type);
         ChartPanel pieChartPanel = new ChartPanel(pieChart);
         tabbedPane.addTab("Biểu đồ tròn", pieChartPanel);
@@ -417,20 +397,19 @@ public class ThongKePanel extends JPanel {
     private JFreeChart createBarChart(String type) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
-        // Populate dataset from table data
         for (int i = 0; i < tableModel.getRowCount(); i++) {
-            String label = tableModel.getValueAt(i, 1).toString(); // Thông tin column
-            Number dat = (Number) tableModel.getValueAt(i, 3); // Đạt column
-            Number khongDat = (Number) tableModel.getValueAt(i, 4); // Không đạt column
+            String label = tableModel.getValueAt(i, 1).toString(); 
+            Number dat = (Number) tableModel.getValueAt(i, 3); 
+            Number khongDat = (Number) tableModel.getValueAt(i, 4);
             
             dataset.addValue(dat, "Đạt", label);
             dataset.addValue(khongDat, "Không đạt", label);
         }
         
         return ChartFactory.createBarChart(
-            "Thống kê kết quả học tập - " + type, // Chart title
-            "Đối tượng thống kê", // X-axis label
-            "Số lượng học sinh", // Y-axis label
+            "Thống kê kết quả học tập - " + type,
+            "Đối tượng thống kê",
+            "Số lượng học sinh", 
             dataset
         );
     }
@@ -454,11 +433,11 @@ public class ThongKePanel extends JPanel {
         dataset.setValue("Không đạt (" + totalFail + ")", totalFail);
         
         return ChartFactory.createPieChart(
-            "Tỷ lệ đạt/không đạt tổng thể - " + type, // Chart title
+            "Tỷ lệ đạt/không đạt tổng thể - " + type,
             dataset,
-            true, // Include legend
-            true, // Include tooltips
-            false // No URLs
+            true, 
+            true,
+            false 
         );
     }
 }

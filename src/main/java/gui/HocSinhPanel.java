@@ -47,19 +47,16 @@ public class HocSinhPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Input components
         txtHoTen = new JTextField(20);
         txtDiaChi = new JTextField(20);
         txtTimKiem = new JTextField(15);
         
         cboGioiTinh = new JComboBox<>(new String[]{"Nam", "Nữ"});
         
-        // Date spinner
         spnNgaySinh = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spnNgaySinh, "dd/MM/yyyy");
         spnNgaySinh.setEditor(dateEditor);
         
-        // Buttons
         btnThem = new JButton("Thêm");
         btnSua = new JButton("Sửa");
         btnXoa = new JButton("Xóa");
@@ -68,7 +65,6 @@ public class HocSinhPanel extends JPanel {
         btnCapNhat = new JButton("Cập nhật");
         btnExportExcel = new JButton("Xuất Excel");
         
-        // Table
         String[] columns = {"Mã HS", "Họ tên", "Ngày sinh", "Giới tính", "Địa chỉ", "Lớp Hiện tại"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
@@ -94,7 +90,6 @@ public class HocSinhPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         
-        // Row 1
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
         topPanel.add(new JLabel("Họ tên:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -105,7 +100,6 @@ public class HocSinhPanel extends JPanel {
         gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
         topPanel.add(cboGioiTinh, gbc);
         
-        // Row 2
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.NONE;
         topPanel.add(new JLabel("Ngày sinh:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -116,7 +110,6 @@ public class HocSinhPanel extends JPanel {
         gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
         topPanel.add(txtDiaChi, gbc);
         
-        // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(btnThem);
         buttonPanel.add(btnSua);
@@ -130,10 +123,8 @@ public class HocSinhPanel extends JPanel {
         
         add(topPanel, BorderLayout.NORTH);
         
-        // Center panel - Table và tìm kiếm
         JPanel centerPanel = new JPanel(new BorderLayout());
         
-        // Search panel
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchPanel.add(new JLabel("Tìm kiếm:"));
         searchPanel.add(txtTimKiem);

@@ -62,7 +62,6 @@ public class DiemThiPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Khối combo box
         cboKhoi = new JComboBox<>();
         cboKhoi.setPreferredSize(new Dimension(120, 25));
         loadKhoiData();
@@ -75,7 +74,7 @@ public class DiemThiPanel extends JPanel {
         txtTuChon1Diem = new JTextField(8);
         txtTuChon2Diem = new JTextField(8);
         txtDiemUT = new JTextField(8);
-        txtDiemUT.setText("0"); // Giá trị mặc định
+        txtDiemUT.setText("0"); 
         
         txtTongDiemThi = new JTextField(8);
         txtTongDiemThi.setEditable(false);
@@ -110,16 +109,13 @@ public class DiemThiPanel extends JPanel {
     private void setupLayout() {
         setLayout(new BorderLayout());
         
-        // Top panel - Form nhập điểm
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBorder(BorderFactory.createTitledBorder("Nhập điểm thi tốt nghiệp"));
         
-        // Form panel
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         
-        // Row 1 - Chọn khối và học sinh
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
         formPanel.add(new JLabel("Khối:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -129,7 +125,6 @@ public class DiemThiPanel extends JPanel {
         gbc.gridx = 3; gbc.gridwidth = 2; 
         formPanel.add(cboHocSinh, gbc);
         
-        // Row 2 - Điểm bắt buộc
         gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 1; gbc.fill = GridBagConstraints.NONE;
         formPanel.add(new JLabel("Toán:"), gbc);
         gbc.gridx = 1;
@@ -139,7 +134,6 @@ public class DiemThiPanel extends JPanel {
         gbc.gridx = 3;
         formPanel.add(txtDiemVan, gbc);
         
-        // Row 3 - Tự chọn 1
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Tự chọn 1:"), gbc);
         gbc.gridx = 1;
@@ -149,7 +143,6 @@ public class DiemThiPanel extends JPanel {
         gbc.gridx = 3;
         formPanel.add(txtTuChon1Diem, gbc);
         
-        // Row 4 - Tự chọn 2
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Tự chọn 2:"), gbc);
         gbc.gridx = 1;
@@ -159,7 +152,6 @@ public class DiemThiPanel extends JPanel {
         gbc.gridx = 3;
         formPanel.add(txtTuChon2Diem, gbc);
         
-        // Row 5 - Điểm ưu tiên
         gbc.gridx = 0; gbc.gridy = 4;
         formPanel.add(new JLabel("Điểm ưu tiên:"), gbc);
         gbc.gridx = 1;
@@ -167,7 +159,6 @@ public class DiemThiPanel extends JPanel {
         gbc.gridx = 2;
         formPanel.add(new JLabel("(≤ 2.0)"), gbc);
         
-        // Row 6 - Kết quả tính toán
         gbc.gridx = 0; gbc.gridy = 5;
         formPanel.add(new JLabel("Tổng điểm thi:"), gbc);
         gbc.gridx = 1;
@@ -179,7 +170,6 @@ public class DiemThiPanel extends JPanel {
         
         topPanel.add(formPanel, BorderLayout.CENTER);
         
-        // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(btnTinhDiem);
         buttonPanel.add(btnLuu);
@@ -192,11 +182,9 @@ public class DiemThiPanel extends JPanel {
         
         add(topPanel, BorderLayout.NORTH);
         
-        // Center panel - Table và tìm kiếm
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBorder(BorderFactory.createTitledBorder("Danh sách điểm thi tốt nghiệp"));
         
-        // Search panel
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchPanel.add(new JLabel("Tìm kiếm học sinh:"));
         searchPanel.add(txtTimKiem);
@@ -222,7 +210,6 @@ public class DiemThiPanel extends JPanel {
         
         txtTimKiem.addActionListener(e -> timKiemHocSinh());
         
-        // Add text change listeners to calculate total
         JTextField[] diemFields = {txtDiemToan, txtDiemVan, txtTuChon1Diem, txtTuChon2Diem, txtDiemUT};
         for (JTextField field : diemFields) {
             field.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -240,15 +227,12 @@ public class DiemThiPanel extends JPanel {
     }
     
     private void loadData() {
-        // Load học sinh lớp 12 only
         loadGrade12Students();
         
-        // Load môn học tự chọn
         List<MonHoc> monHocTuChon = diemDAO.getMonHocTuChon();
         cboTuChon1.removeAllItems();
         cboTuChon2.removeAllItems();
         
-        // Add placeholder items
         cboTuChon1.addItem(null);
         cboTuChon2.addItem(null);
         
@@ -257,7 +241,6 @@ public class DiemThiPanel extends JPanel {
             cboTuChon2.addItem(mh);
         }
         
-        // Set custom renderer for mon hoc dropdowns
         DefaultListCellRenderer monHocRenderer = new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
@@ -277,19 +260,16 @@ public class DiemThiPanel extends JPanel {
         cboTuChon1.setSelectedIndex(0);
         cboTuChon2.setSelectedIndex(0);
         
-        // Load table
         loadTableData();
     }
     
     private void loadGrade12Students() {
         cboHocSinh.removeAllItems();
-        cboHocSinh.addItem(null); // Add placeholder
+        cboHocSinh.addItem(null); 
         
         try {
-            // Lấy tất cả học sinh không trùng lặp với thông tin lớp gần nhất
             List<HocSinh> allHocSinh = hocSinhDAO.getAllHocSinh();
             
-            // Lọc chỉ học sinh lớp 12 (kiểm tra tên lớp chứa "12")
             for (HocSinh hs : allHocSinh) {
                 if (hs.getTenLop() != null && hs.getTenLop().contains("12")) {
                     cboHocSinh.addItem(hs);
@@ -301,7 +281,6 @@ public class DiemThiPanel extends JPanel {
                 "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         
-        // Set custom renderer for student dropdown
         cboHocSinh.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
@@ -316,18 +295,16 @@ public class DiemThiPanel extends JPanel {
             }
         });
         
-        cboHocSinh.setSelectedIndex(0); // Select placeholder by default
+        cboHocSinh.setSelectedIndex(0); 
     }
     
     private void loadTableData() {
         tableModel.setRowCount(0);
         
         try {
-            // Lấy tất cả học sinh không trùng lặp với thông tin lớp gần nhất
             List<HocSinh> allHocSinh = hocSinhDAO.getAllHocSinh();
             List<HocSinh> listHocSinh = new ArrayList<>();
             
-            // Lọc chỉ học sinh lớp 12 (kiểm tra tên lớp chứa "12")
             for (HocSinh hs : allHocSinh) {
                 if (hs.getTenLop() != null && hs.getTenLop().contains("12")) {
                     listHocSinh.add(hs);
@@ -388,7 +365,6 @@ public class DiemThiPanel extends JPanel {
                 txtTuChon2Diem.setText(String.valueOf(diemThi.getTuChon2Diem()));
                 txtDiemUT.setText(String.valueOf(diemThi.getDiemUT()));
                 
-                // Set selected môn học
                 for (int i = 0; i < cboTuChon1.getItemCount(); i++) {
                     MonHoc mh = cboTuChon1.getItemAt(i);
                     if (mh != null && mh.getId() == diemThi.getTuChon1MH()) {
@@ -473,7 +449,6 @@ public class DiemThiPanel extends JPanel {
         tableModel.setRowCount(0);
         
         try {
-            // Lấy kết quả tìm kiếm từ DAO
             List<HocSinh> searchResults = hocSinhDAO.searchHocSinh(keyword);
             
             // Lọc chỉ học sinh lớp 12
@@ -529,15 +504,12 @@ public class DiemThiPanel extends JPanel {
     private void selectHocSinhFromTable() {
         int selectedRow = tableDiemThi.getSelectedRow();
         if (selectedRow >= 0) {
-            // Lấy ID học sinh từ cột 0 (Mã HS)
             int hsId = (Integer) tableModel.getValueAt(selectedRow, 0);
             
-            // Tìm và chọn học sinh trong dropdown theo ID
             for (int i = 0; i < cboHocSinh.getItemCount(); i++) {
                 HocSinh hs = cboHocSinh.getItemAt(i);
                 if (hs != null && hs.getId() == hsId) {
                     cboHocSinh.setSelectedIndex(i);
-                    // Load dữ liệu điểm cho học sinh được chọn
                     loadDiemThi();
                     break;
                 }
@@ -566,7 +538,6 @@ public class DiemThiPanel extends JPanel {
                 double tongDiemThi = txtTongDiemThi.getText().trim().isEmpty() ? 0 : Double.parseDouble(txtTongDiemThi.getText().trim());
                 double diemUT = txtDiemUT.getText().trim().isEmpty() ? 0 : Double.parseDouble(txtDiemUT.getText().trim());
                 
-                // Get điểm TB các năm from DiemHocKy
                 var diemHocKy = diemDAO.getDiemHocKy(selectedHS.getId());
                 double diemTBCacNam = 0;
                 if (diemHocKy != null && diemHocKy.getDiemTBCacNam() != null) {
@@ -594,7 +565,6 @@ public class DiemThiPanel extends JPanel {
     
     private boolean validateInput() {
         try {
-            // Validate điểm Toán
             String toanText = txtDiemToan.getText().trim();
             if (toanText.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập điểm Toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -608,7 +578,6 @@ public class DiemThiPanel extends JPanel {
                 return false;
             }
             
-            // Validate điểm Văn
             String vanText = txtDiemVan.getText().trim();
             if (vanText.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập điểm Văn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -622,7 +591,6 @@ public class DiemThiPanel extends JPanel {
                 return false;
             }
             
-            // Validate điểm Tự chọn 1
             String tc1Text = txtTuChon1Diem.getText().trim();
             if (tc1Text.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập điểm Tự chọn 1!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -636,7 +604,6 @@ public class DiemThiPanel extends JPanel {
                 return false;
             }
             
-            // Validate điểm Tự chọn 2
             String tc2Text = txtTuChon2Diem.getText().trim();
             if (tc2Text.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập điểm Tự chọn 2!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -650,7 +617,6 @@ public class DiemThiPanel extends JPanel {
                 return false;
             }
             
-            // Validate điểm ưu tiên (có thể để trống, mặc định là 0)
             String utText = txtDiemUT.getText().trim();
             if (!utText.isEmpty()) {
                 double ut = Double.parseDouble(utText);
@@ -661,7 +627,6 @@ public class DiemThiPanel extends JPanel {
                 }
             }
             
-            // Validate môn tự chọn
             if (cboTuChon1.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn môn tự chọn 1!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 cboTuChon1.requestFocus();
@@ -696,7 +661,7 @@ public class DiemThiPanel extends JPanel {
         txtTongDiemThi.setText("");
         txtDiemXetTN.setText("");
         if (cboTuChon1.getItemCount() > 0) cboTuChon1.setSelectedIndex(0);
-        if (cboTuChon2.getItemCount() > 1) cboTuChon2.setSelectedIndex(1);
+        if (cboTuChon2.getItemCount() > 0) cboTuChon2.setSelectedIndex(0);
     }
     
     private void loadKhoiData() {
@@ -704,15 +669,13 @@ public class DiemThiPanel extends JPanel {
             List<Khoi> khoiList = khoiDAO.getAllKhoi();
             cboKhoi.removeAllItems();
             
-            // Only add grade 12 (Khối 12)
             for (Khoi khoi : khoiList) {
                 if ("12".equals(khoi.getTenKhoi())) {
                     cboKhoi.addItem(khoi);
-                    break; // Found grade 12, no need to continue
+                    break; 
                 }
             }
             
-            // Set custom renderer
             cboKhoi.setRenderer(new DefaultListCellRenderer() {
                 @Override
                 public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
@@ -725,12 +688,10 @@ public class DiemThiPanel extends JPanel {
                 }
             });
             
-            // Automatically select grade 12 if available
             if (cboKhoi.getItemCount() > 0) {
                 cboKhoi.setSelectedIndex(0);
             }
             
-            // Disable the combobox since only grade 12 is allowed
             cboKhoi.setEnabled(false);
             
         } catch (Exception e) {
@@ -741,14 +702,13 @@ public class DiemThiPanel extends JPanel {
     }
     
     private void filterHocSinhByKhoi() {
-        // Since only grade 12 is allowed and we use getAllHocSinh(), just reload grade 12 students
         loadGrade12Students();
     }
     
     private void clearDiemThiForm() {
-        cboHocSinh.setSelectedIndex(0); // Select placeholder
-        cboTuChon1.setSelectedIndex(0); // Select placeholder
-        cboTuChon2.setSelectedIndex(0); // Select placeholder
+        cboHocSinh.setSelectedIndex(0);
+        cboTuChon1.setSelectedIndex(0);
+        cboTuChon2.setSelectedIndex(0);
         txtDiemToan.setText("");
         txtDiemVan.setText("");
         txtTuChon1Diem.setText("");

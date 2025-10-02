@@ -44,7 +44,6 @@ public class MainFrame extends JFrame {
         
         add(tabbedPane, BorderLayout.CENTER);
         
-        // Tạo menu bar
         JMenuBar menuBar = new JMenuBar();
         
         JMenu fileMenu = new JMenu("Tệp");
@@ -69,7 +68,6 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
-        // Set Look and Feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);

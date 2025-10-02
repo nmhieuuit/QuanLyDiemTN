@@ -10,14 +10,8 @@ import java.util.List;
 import config.DatabaseConnection;
 import model.Khoi;
 
-/**
- * DAO class để xử lý dữ liệu Khối học
- */
 public class KhoiDAO {
     
-    /**
-     * Lấy tất cả khối học
-     */
     public List<Khoi> getAllKhoi() {
         List<Khoi> list = new ArrayList<>();
         String sql = "SELECT * FROM DM_Khoi ORDER BY TenKhoi";
@@ -39,9 +33,6 @@ public class KhoiDAO {
         return list;
     }
     
-    /**
-     * Lấy khối theo ID
-     */
     public Khoi getKhoiById(int id) {
         String sql = "SELECT * FROM DM_Khoi WHERE ID = ?";
         
@@ -63,10 +54,7 @@ public class KhoiDAO {
         }
         return null;
     }
-    
-    /**
-     * Lấy khối theo tên khối
-     */
+
     public Khoi getKhoiByTenKhoi(String tenKhoi) {
         String sql = "SELECT * FROM DM_Khoi WHERE TenKhoi = ?";
         
@@ -89,9 +77,6 @@ public class KhoiDAO {
         return null;
     }
     
-    /**
-     * Thêm khối mới
-     */
     public boolean insertKhoi(Khoi khoi) {
         String sql = "INSERT INTO DM_Khoi (TenKhoi, MoTa) VALUES (?, ?)";
         
@@ -107,10 +92,7 @@ public class KhoiDAO {
             return false;
         }
     }
-    
-    /**
-     * Cập nhật khối
-     */
+
     public boolean updateKhoi(Khoi khoi) {
         String sql = "UPDATE DM_Khoi SET TenKhoi = ?, MoTa = ? WHERE ID = ?";
         
@@ -127,10 +109,7 @@ public class KhoiDAO {
             return false;
         }
     }
-    
-    /**
-     * Xóa khối
-     */
+
     public boolean deleteKhoi(int id) {
         String sql = "DELETE FROM DM_Khoi WHERE ID = ?";
         

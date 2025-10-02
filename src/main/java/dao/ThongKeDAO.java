@@ -268,10 +268,7 @@ public class ThongKeDAO {
     public Map<String, Object[]> thongKeTheoMon() {
         Map<String, Object[]> result = new HashMap<>();
         
-        // Thống kê điểm Toán
         result.put("Toán", thongKeTheoMonCuThe("DiemToan"));
-        
-        // Thống kê điểm Văn  
         result.put("Văn", thongKeTheoMonCuThe("DiemVan"));
         
         return result;

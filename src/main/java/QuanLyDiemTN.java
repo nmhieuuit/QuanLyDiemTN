@@ -8,32 +8,23 @@ import javax.swing.UIManager;
 import config.DatabaseConnection;
 import gui.MainFrame;
 
-/**
- * Class chính để khởi chạy ứng dụng Quản lý điểm tốt nghiệp
- */
 public class QuanLyDiemTN {
     
     public static void main(String[] args) {
-        // Thiết lập Look and Feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.err.println("Không thể thiết lập Look and Feel: " + e.getMessage());
         }
         
-        // Thiết lập font tiếng Việt
         setupVietnameseFont();
         
-        // Khởi chạy ứng dụng trong Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
             try {
-                // Kiểm tra kết nối database
                 if (checkDatabaseConnection()) {
-                    // Tạo và hiển thị main frame
                     MainFrame mainFrame = new MainFrame();
                     mainFrame.setVisible(true);
                 } else {
-                    // Hiển thị thông báo lỗi kết nối
                     showConnectionError();
                 }
                 
@@ -44,9 +35,6 @@ public class QuanLyDiemTN {
         });
     }
     
-    /**
-     * Thiết lập font tiếng Việt cho toàn bộ ứng dụng
-     */
     private static void setupVietnameseFont() {
         Font vietnameseFont = new Font("Arial Unicode MS", Font.PLAIN, 12);
         
@@ -65,9 +53,6 @@ public class QuanLyDiemTN {
     }
     
 
-    /**
-     * Kiểm tra kết nối database
-     */
     private static boolean checkDatabaseConnection() {
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -78,9 +63,6 @@ public class QuanLyDiemTN {
         }
     }
     
-    /**
-     * Hiển thị thông báo lỗi kết nối database
-     */
     private static void showConnectionError() {
         String message = 
             "Không thể kết nối đến database!\n" +
@@ -105,18 +87,13 @@ public class QuanLyDiemTN {
         );
         
         if (choice == 0) {
-            // Tiếp tục chạy ở chế độ demo
             MainFrame mainFrame = new MainFrame();
             mainFrame.setVisible(true);
         } else {
-            // Thoát ứng dụng
             System.exit(0);
         }
     }
     
-    /**
-     * Hiển thị dialog lỗi
-     */
     private static void showErrorDialog(String title, String message) {
         JOptionPane.showMessageDialog(
             null,

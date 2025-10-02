@@ -2,19 +2,14 @@ package model;
 
 import java.time.LocalDateTime;
 
-/**
- * Model class cho Môn học - khớp với bảng MonHoc trong schema
- */
 public class MonHoc {
     private int id;
     private String tenMon;
-    private String loaiMon; // 'BatBuoc' hoặc 'TuChon'
+    private String loaiMon; // 'BatBuoc' | 'TuChon'
     private LocalDateTime createdAt;
     
-    // Constructor mặc định
     public MonHoc() {}
     
-    // Constructor với tham số
     public MonHoc(String tenMon, String loaiMon) {
         this.tenMon = tenMon;
         this.loaiMon = loaiMon;
@@ -26,7 +21,6 @@ public class MonHoc {
         this.loaiMon = loaiMon;
     }
     
-    // Getter và Setter methods
     public int getId() {
         return id;
     }
@@ -59,12 +53,10 @@ public class MonHoc {
         this.createdAt = createdAt;
     }
     
-    // Kiểm tra môn học bắt buộc
     public boolean isBatBuoc() {
         return "BatBuoc".equals(loaiMon);
     }
     
-    // Kiểm tra môn học tự chọn
     public boolean isTuChon() {
         return "TuChon".equals(loaiMon);
     }

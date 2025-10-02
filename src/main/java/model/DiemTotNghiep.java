@@ -1,18 +1,13 @@
 package model;
 
-/**
- * Model class cho Điểm tốt nghiệp
- */
 public class DiemTotNghiep {
     private int hsId;
     private String tenMon;
     private double diem;
-    private String ketQua; // "Đậu" hoặc "Rớt"
+    private String ketQua; 
     
-    // Constructor mặc định
     public DiemTotNghiep() {}
-    
-    // Constructor với tham số
+
     public DiemTotNghiep(int hsId, String tenMon, double diem) {
         this.hsId = hsId;
         this.tenMon = tenMon;
@@ -27,7 +22,6 @@ public class DiemTotNghiep {
         this.ketQua = ketQua;
     }
     
-    // Getter và Setter methods
     public int getHsId() {
         return hsId;
     }
@@ -62,16 +56,10 @@ public class DiemTotNghiep {
         this.ketQua = ketQua;
     }
     
-    /**
-     * Kiểm tra có đậu tốt nghiệp không
-     */
     public boolean isDau() {
         return diem >= 5.0 && "Đậu".equals(ketQua);
     }
     
-    /**
-     * Kiểm tra có phải môn bắt buộc không
-     */
     public boolean isMonBatBuoc() {
         return "Toán".equals(tenMon) || "Văn".equals(tenMon) || 
                "TOAN".equals(tenMon) || "VAN".equals(tenMon);

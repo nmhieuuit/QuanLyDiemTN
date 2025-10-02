@@ -20,7 +20,6 @@ public class DiemHocKy {
         this.hsId = hsId;
     }
     
-    // Getters and Setters
     public int getHsId() { return hsId; }
     public void setHsId(int hsId) { this.hsId = hsId; }
     
@@ -68,14 +67,12 @@ public class DiemHocKy {
         return (tb10 + tb11 * 2 + tb12 * 3) / 6.0;
     }
     
-    // Kiểm tra xem có đủ điểm để tính TB không
     public boolean hasValidGrades() {
         return (hk1_10 != null || hk2_10 != null || 
                 hk1_11 != null || hk2_11 != null ||
                 hk1_12 != null || hk2_12 != null);
     }
     
-    // Format điểm để hiển thị
     public String formatDiem(Double diem) {
         return diem != null ? String.format("%.2f", diem) : "";
     }
