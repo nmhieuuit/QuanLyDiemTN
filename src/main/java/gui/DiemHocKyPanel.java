@@ -543,6 +543,6 @@ public class DiemHocKyPanel extends JPanel {
     }
     
     private void exportToExcel() {
-        ExcelExporter.exportTable(this, tableModel, "Điểm học kỳ", "DiemHocKy");
+        ExcelExporter.exportTable(this, tableModel, "Kết quả học tập", "DiemHocKy");
     }
 }

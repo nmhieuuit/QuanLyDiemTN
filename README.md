@@ -26,7 +26,7 @@
 
 - 👥 **Quản lý học sinh**: Thêm, sửa, xóa, tìm kiếm học sinh
 - 🏫 **Quản lý lớp học**: Tạo lớp và phân công học sinh
-- 📊 **Nhập điểm học kỳ**: Điểm các học kỳ lớp 10, 11, 12
+- 📊 **Nhập Kết quả học tập**: Điểm các học kỳ lớp 10, 11, 12
 - 📝 **Nhập điểm thi**: Điểm thi tốt nghiệp với môn bắt buộc và tự chọn
 - 🧮 **Tính toán tự động**: Điểm xét tốt nghiệp theo quy định
 - 📈 **Thống kê báo cáo**: Thống kê theo lớp, năm học
@@ -231,11 +231,11 @@ java -jar target/QuanLyDiemTN-1.0-SNAPSHOT.jar
 - **Xem danh sách**: Hiển thị học sinh trong từng lớp
 - **Xuất Excel**: Xuất danh sách lớp ra file Excel
 
-### 3. 📊 Nhập Điểm học kỳ
+### 3. 📊 Nhập Kết quả học tập
 - **Chọn học sinh**: Từ danh sách hoặc tìm kiếm
 - **Nhập điểm**: HK1-10, HK2-10, HK1-11, HK2-11, HK1-12, HK2-12
 - **Tự động tính**: Hệ thống tự động tính điểm trung bình
-- **Xuất Excel**: Xuất bảng điểm học kỳ ra file Excel
+- **Xuất Excel**: Xuất bảng Kết quả học tập ra file Excel
 
 ### 4. 📝 Nhập Điểm thi tốt nghiệp
 - **Môn bắt buộc**: Toán, Văn

@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
     private void setupLayout() {
         tabbedPane.addTab("Quản lý Học sinh", new ImageIcon(), hocSinhPanel, "Thêm, sửa, xóa học sinh");
         tabbedPane.addTab("Quản lý Lớp", new ImageIcon(), lopPanel, "Quản lý lớp và phân công học sinh");
-        tabbedPane.addTab("Điểm Học kỳ", new ImageIcon(), diemHocKyPanel, "Nhập điểm các học kỳ");
+        tabbedPane.addTab("Kết quả học tập", new ImageIcon(), diemHocKyPanel, "Nhập điểm các học kỳ");
         tabbedPane.addTab("Điểm Thi TN", new ImageIcon(), diemThiPanel, "Nhập điểm thi tốt nghiệp");
         tabbedPane.addTab("Thống kê", new ImageIcon(), thongKePanel, "Xem thống kê và báo cáo");
         
