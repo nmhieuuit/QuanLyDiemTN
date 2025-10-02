@@ -227,7 +227,7 @@ java -jar target/QuanLyDiemTN-1.0-SNAPSHOT.jar
 
 ### 2. 🏫 Quản lý Lớp
 - **Tạo lớp**: Tạo lớp mới với tên và năm học
-- **Phân công**: Thêm/bỏ học sinh vào/khỏi lớp
+- **Xếp lớp**: Thêm/bỏ học sinh vào/khỏi lớp
 - **Xem danh sách**: Hiển thị học sinh trong từng lớp
 - **Xuất Excel**: Xuất danh sách lớp ra file Excel
 

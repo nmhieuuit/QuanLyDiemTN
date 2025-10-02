@@ -166,7 +166,7 @@ public class LopPanel extends JPanel {
         add(leftPanel, BorderLayout.WEST);
         
         JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.setBorder(BorderFactory.createTitledBorder("Phân công Học sinh"));
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Xếp lớp"));
         
         JPanel selectLopPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         selectLopPanel.add(new JLabel("Chọn lớp:"));
