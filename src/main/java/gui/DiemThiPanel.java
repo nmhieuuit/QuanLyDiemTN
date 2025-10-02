@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import dao.DiemDAO;
@@ -104,6 +105,41 @@ public class DiemThiPanel extends JPanel {
         };
         tableDiemThi = new JTable(tableModel);
         tableDiemThi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        // Tạo custom renderer để tô màu ô kết quả
+        DefaultTableCellRenderer ketQuaRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
+                    boolean hasFocus, int row, int column) {
+                Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                
+                // Chỉ áp dụng màu cho cột "Kết quả" (cột cuối cùng - index 11)
+                if (column == 11 && value != null) {
+                    String ketQua = value.toString();
+                    if ("Đạt".equals(ketQua)) {
+                        comp.setBackground(new Color(144, 238, 144)); // Màu xanh nhạt
+                        comp.setForeground(Color.BLACK);
+                    } else if ("Không đạt".equals(ketQua)) {
+                        comp.setBackground(new Color(255, 182, 182)); // Màu đỏ nhạt
+                        comp.setForeground(Color.BLACK);
+                    } else {
+                        comp.setBackground(Color.WHITE);
+                        comp.setForeground(Color.BLACK);
+                    }
+                } else {
+                    // Giữ màu mặc định cho các cột khác
+                    if (!isSelected) {
+                        comp.setBackground(Color.WHITE);
+                        comp.setForeground(Color.BLACK);
+                    }
+                }
+                
+                return comp;
+            }
+        };
+        
+        // Áp dụng renderer cho cột "Kết quả"
+        tableDiemThi.getColumnModel().getColumn(11).setCellRenderer(ketQuaRenderer);
     }
     
     private void setupLayout() {
@@ -324,7 +360,7 @@ public class DiemThiPanel extends JPanel {
                     }
                     
                     double diemXetTN = tinhDiemXetTotNghiep(hs.getId(), diemThi);
-                    String ketQua = (diemThi.getDiemToan() >= 5 && diemThi.getDiemVan() >= 5 && diemXetTN >= 5) ? "Đạt" : "Không đạt";
+                    String ketQua = (diemThi.getDiemToan() > 1 && diemThi.getDiemVan() > 1 && diemThi.getTuChon1Diem() > 1 && diemThi.getTuChon2Diem() > 1 && diemXetTN >= 5) ? "Đạt" : "Không đạt";
                     
                     Object[] row = {
                         hs.getId(),
@@ -472,7 +508,7 @@ public class DiemThiPanel extends JPanel {
                     }
                     
                     double diemXetTN = tinhDiemXetTotNghiep(hs.getId(), diemThi);
-                    String ketQua = (diemThi.getDiemToan() >= 5 && diemThi.getDiemVan() >= 5 && diemXetTN >= 5) ? "Đạt" : "Không đạt";
+                    String ketQua = (diemThi.getDiemToan() > 1 && diemThi.getDiemVan() > 1 && diemThi.getTuChon2Diem() > 1 && diemThi.getTuChon2Diem() > 1 && diemXetTN >= 5) ? "Đạt" : "Không đạt";
                     
                     Object[] row = {
                         hs.getId(),

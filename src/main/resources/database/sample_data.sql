@@ -358,7 +358,7 @@ SELECT
     hs.ID,
     (((dt.TongDiemThi + ISNULL(dhk.DiemTBCacNam,0))/2.0) + ISNULL(dt.DiemUT,0)) AS DiemXetTotNghiep,
     CASE 
-        WHEN dt.DiemToan >= 1.0 AND dt.DiemVan >= 1.0 AND dt.TuChon1Diem >= 1.0 AND dt.TuChon2Diem >= 1.0 AND
+        WHEN dt.DiemToan > 1.0 AND dt.DiemVan > 1.0 AND dt.TuChon1Diem > 1.0 AND dt.TuChon2Diem > 1.0 AND
              (((dt.TongDiemThi + ISNULL(dhk.DiemTBCacNam,0))/2.0) + ISNULL(dt.DiemUT,0)) >= 5.0 
         THEN N'Đạt' 
         ELSE N'Không đạt' 
